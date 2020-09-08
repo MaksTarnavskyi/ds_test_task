@@ -24,7 +24,7 @@ class Preprocessor:
 
     def fit_train(self, train_filename="data/train.tsv", chunksize=500, sep="\t",n_jobs=cpu_count):
         """
-        Read train file by chunks, split data for each core,
+        Read train file by chunks, split data for each core, run calculations for statistics
         :param train_filename: path for train file
         :param chunksize: amount of rows per chunck
         :param sep: separator between column values in train.tsv
@@ -109,6 +109,17 @@ class Preprocessor:
     #--------------------------- Process test -------------------------------------------------------
 
     def process_test(self, test_filename="data/test.tsv", output_folder="result", output_filename="test_proc.tsv", chunksize=500, sep="\t", n_jobs=cpu_count, process_method="standardization"):
+        """
+        Read test file by chunks, split data for each core, run process function for each row, save rows in output file
+        :param test_filename: path to test.tsv - data for processing
+        :param output_folder: path for output folder (module creates it, if it doesn't exist)
+        :param output_filename: name for output file
+        :param chunksize: amount of rows per chunck
+        :param sep: separator between column values in test.tsv
+        :param n_jobs: amount of cpus to use
+        :param process_method: method for process features
+        :return: None
+        """
         append = False #for creating file and later appending
 
         self._check_path(output_folder) #check if exists output_folder
@@ -230,13 +241,3 @@ if __name__ == "__main__":
     preprocessor = Preprocessor()
     preprocessor.fit_train(**train_arg)
     preprocessor.process_test(**test_arg)
-
-
-
-
-
-
-
-    # preprocessor.fit_train(train_filename="data/train.tsv")
-    # preprocessor.process_test(test_filename="data/test.tsv", output_folder="result",
-    #                           output_filename="test_proc.tsv", process_method="standardization")
