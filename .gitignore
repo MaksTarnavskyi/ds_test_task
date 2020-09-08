@@ -2,7 +2,9 @@ test_env
 .idea/
 
 .DS_Store
+notebooks/.ipynb_checkpoints
 .ipynb_checkpoints
+result
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
