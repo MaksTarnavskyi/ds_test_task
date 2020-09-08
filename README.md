@@ -18,6 +18,9 @@ test_env\Scripts\activate
 pip3 install -r requirements.txt
 ```
 ### Run module
+First, add `train.tsv` and `test.tsv` into folder `data`
+
+Then run command
 ```
 python3 module/Preprocessor.py --train_filename="data/train.tsv" --test_filename="data/test.tsv" --output_folder="result" --output_filename="test_proc.tsv" --process_method="standardization"
 ```
