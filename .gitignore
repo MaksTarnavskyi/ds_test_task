@@ -5,6 +5,7 @@ test_env
 notebooks/.ipynb_checkpoints
 .ipynb_checkpoints
 result
+data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,6 +4,7 @@ from multiprocessing import Pool, cpu_count
 import logging
 import os
 from functools import partial
+import getopt, sys
 
 cpu_count = max(cpu_count() - 1, 1)
 
@@ -191,3 +192,51 @@ class Preprocessor:
             return self._standardize_features
         else:
             raise NotImplementedError
+
+
+if __name__ == "__main__":
+    full_cmd_arguments = sys.argv
+    argument_list = full_cmd_arguments[1:]
+
+    arg_dict = {}
+    if len(argument_list) > 0:
+        long_options = ["train_filename=", "test_filename=", "output_folder=", "output_filename=", "process_method="]
+        short_options = ""
+        arguments, _ = getopt.getopt(argument_list, short_options, long_options)
+
+        arguments = np.array(arguments)
+        argument_keys = [arg_key[2:] for arg_key in arguments[:, 0]]
+        arg_dict = dict(zip(argument_keys, arguments[:, 1]))
+
+
+    train_arg={
+        "train_filename": "data/train.tsv"
+    }
+
+    if arg_dict.get("train_filename", False):
+        train_arg["train_filename"] = arg_dict["train_filename"]
+
+    test_arg = {
+        "test_filename": "data/test.tsv",
+        "output_folder": "result",
+        "output_filename": "test_proc.tsv",
+        "process_method": "standardization"
+    }
+
+    for key in test_arg.keys():
+        if arg_dict.get(key, False):
+            test_arg[key] = arg_dict[key]
+
+    preprocessor = Preprocessor()
+    preprocessor.fit_train(**train_arg)
+    preprocessor.process_test(**test_arg)
+
+
+
+
+
+
+
+    # preprocessor.fit_train(train_filename="data/train.tsv")
+    # preprocessor.process_test(test_filename="data/test.tsv", output_folder="result",
+    #                           output_filename="test_proc.tsv", process_method="standardization")
