@@ -1,4 +1,4 @@
-# Jooble DS test task
+# DS test task
 
 ### Create virtualenv
 ```
